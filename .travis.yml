@@ -4,6 +4,9 @@ node_js:
   - 8.11.3
 env:
   - NODE_ENV="test"
+before_script: 
+  - yarn db:setup:user
+  - yarn db:reset
 script:
   - yarn test
   - yarn lint
