@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  PORT: 3000, 
+  PORT: 3000,
   DB_HOST: 'localhost',
   DB_NAME: 'sfmovies_development',
   DB_PASSWORD: '',
