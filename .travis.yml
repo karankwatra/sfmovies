@@ -10,3 +10,7 @@ before_script:
 script:
   - yarn test
   - yarn lint
+services: 
+  - postgresql 
+addons: 
+  - postgresql: '9.6'
