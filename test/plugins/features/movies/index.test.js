@@ -7,7 +7,6 @@ describe('movies integration', () => {
   describe('create', () => {
 
     it('creates a movie', async () => {
-
       const response = await Movies.inject({
         url: '/movies',
         method: 'POST',
