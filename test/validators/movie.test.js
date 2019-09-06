@@ -1,7 +1,6 @@
 'use strict';
 
-const Joi = require('joi');
-
+const Joi            = require('joi');
 const MovieValidator = require('../../lib/validators/movie');
 
 describe('movie validator', () => {
@@ -10,7 +9,6 @@ describe('movie validator', () => {
 
     it('is required', () => {
       const payload = {};
-
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('title');
@@ -19,7 +17,6 @@ describe('movie validator', () => {
 
     it('is less than 255 characters', () => {
       const payload = { title: 'a'.repeat(260) };
-
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('title');
@@ -35,7 +32,6 @@ describe('movie validator', () => {
         title: 'foo',
         release_year: 1800
       };
-
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('release_year');
@@ -47,7 +43,6 @@ describe('movie validator', () => {
         title: 'foo',
         release_year: 12345
       };
-
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('release_year');
