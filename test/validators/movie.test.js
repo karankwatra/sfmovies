@@ -29,7 +29,7 @@ describe('movie validator', () => {
 
     it('is after 1878', () => {
       const payload = {
-        name: 'foo',
+        title: 'foo',
         release_year: 1800
       };
       const result = Joi.validate(payload, MovieValidator);
@@ -40,7 +40,7 @@ describe('movie validator', () => {
 
     it('is limited to 4 digits', () => {
       const payload = {
-        name: 'foo',
+        title: 'foo',
         release_year: 12345
       };
       const result = Joi.validate(payload, MovieValidator);

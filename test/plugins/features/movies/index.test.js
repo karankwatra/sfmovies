@@ -10,7 +10,7 @@ describe('movies integration', () => {
       const response = await Movies.inject({
         url: '/movies',
         method: 'POST',
-        payload: { name: 'Volver' }
+        payload: { title: 'Volver' }
       });
 
       expect(response.statusCode).to.eql(200);
