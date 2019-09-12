@@ -1,22 +1,20 @@
 'use strict';
 
-exports.up = (Knex) => {
-  return Knex.schema.table('movies', (table) => {
+const CONSTRAINT = 'movies_name_not_null';
+const TABLE      = 'movies';
+
+exports.up = async (Knex) => {
+  await Knex.schema.table('movies', (table) => {
     table.dropColumn('title');
-  })
-  .then(() => {
-    return Knex.raw('ALTER TABLE movies ADD CONSTRAINT movies_name_not_null CHECK (name IS NOT NULL) NOT VALID')
-    .then(() => {
-      return Knex.raw('ALTER TABLE movies VALIDATE CONSTRAINT movies_name_not_null');
-    });
   });
+
+  await Knex.raw(`ALTER TABLE ${TABLE} ADD CONSTRAINT ${CONSTRAINT} CHECK (name IS NOT NULL) NOT VALID`);
+  await Knex.raw(`ALTER TABLE ${TABLE} VALIDATE CONSTRAINT ${CONSTRAINT}`);
 };
 
-exports.down = (Knex) => {
-  return Knex.schema.table('movies', (table) => {
+exports.down = async (Knex) => {
+  await Knex.schema.table('movies', (table) => {
     table.text('title');
-  })
-  .then(() => {
-    return Knex.raw('ALTER TABLE movies DROP CONSTRAINT movies_name_not_null');
   });
+  await Knex.raw(`ALTER TABLE ${TABLE} DROP CONSTRAINT ${CONSTRAINT}`);
 };
