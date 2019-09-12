@@ -5,21 +5,21 @@ const MovieValidator = require('../../lib/validators/movie');
 
 describe('movie validator', () => {
 
-  describe('name', () => {
+  describe('title', () => {
 
     it('is required', () => {
       const payload = {};
       const result = Joi.validate(payload, MovieValidator);
 
-      expect(result.error.details[0].path[0]).to.eql('name');
+      expect(result.error.details[0].path[0]).to.eql('title');
       expect(result.error.details[0].type).to.eql('any.required');
     });
 
     it('is less than 255 characters', () => {
-      const payload = { name: 'a'.repeat(260) };
+      const payload = { title: 'a'.repeat(260) };
       const result = Joi.validate(payload, MovieValidator);
 
-      expect(result.error.details[0].path[0]).to.eql('name');
+      expect(result.error.details[0].path[0]).to.eql('title');
       expect(result.error.details[0].type).to.eql('string.max');
     });
 
