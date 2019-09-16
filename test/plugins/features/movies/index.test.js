@@ -20,4 +20,18 @@ describe('movies integration', () => {
 
   });
 
+  describe('retrive', () => {
+
+    it('retrieves a movie', async () => {
+      const response = await Movies.inject({
+        url: '/movies?title=Volver',
+        method: 'GET'
+      });
+
+      expect(response.statusCode).to.eql(200);
+      expect(response.result[0].object).to.eql('movie');
+    });
+
+  });
+
 });
