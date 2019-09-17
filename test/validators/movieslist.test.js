@@ -100,6 +100,17 @@ describe('movie query validator', () => {
       expect(result.error.details[0].context.missing[0]).to.eql('to_year');
     });
 
+    it('is accompanied by a to_year', () => {
+      const payload = {
+        title: 'foo',
+        from_year: 1900,
+        to_year: 2000
+      };
+      const result = Joi.validate(payload, MovieListValidator);
+
+      expect(result.error).to.eql(null);
+    });
+
   });
 
   describe('to_year', () => {
@@ -134,6 +145,17 @@ describe('movie query validator', () => {
       const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].context.missing[0]).to.eql('from_year');
+    });
+
+    it('is accompanied by a from_year', () => {
+      const payload = {
+        title: 'foo',
+        from_year: 1900,
+        to_year: 2000
+      };
+      const result = Joi.validate(payload, MovieListValidator);
+
+      expect(result.error).to.eql(null);
     });
 
   });
