@@ -30,14 +30,14 @@ describe('movie controller', () => {
 
     it('retrieves the entire list of movies', async () => {
       const query = {};
-      const movies = await Controller.read(query);
+      const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(2);
     });
 
     it('retrieves movies from a specific year', async () => {
       const query = { year: 2007 };
-      const movies = await Controller.read(query);
+      const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('title')).to.eql(this.payload.title);
@@ -46,7 +46,7 @@ describe('movie controller', () => {
 
     it('retrieves movies in a range of years', async () => {
       const query = { from_year: 2000, to_year: 2010 };
-      const movies = await Controller.read(query);
+      const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('title')).to.eql(this.payload.title);
@@ -55,7 +55,7 @@ describe('movie controller', () => {
 
     it('retrieves a movie based on the title', async () => {
       const query = { title: 'Zodiac' };
-      const movies = await Controller.read(query);
+      const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('title')).to.eql(this.payload.title);
@@ -64,7 +64,7 @@ describe('movie controller', () => {
 
     it('retrieves a movie based on the fuzzy title', async () => {
       const query = { title: 'apes' };
-      const movies = await Controller.read(query);
+      const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('title')).to.eql(this.payload2.title);

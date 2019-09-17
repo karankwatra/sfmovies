@@ -50,7 +50,7 @@ describe('movie query validator', () => {
       };
       const result = Joi.validate(payload, MovieListValidator);
 
-      expect(result.error.details[0].message).to.eql('"from_year" is not allowed');
+      expect(result.error.name).to.eql('ValidationError');
     });
 
     it('is not accompanied by a to_year', () => {
@@ -61,7 +61,7 @@ describe('movie query validator', () => {
       };
       const result = Joi.validate(payload, MovieListValidator);
 
-      expect(result.error.details[0].message).to.eql('"to_year" is not allowed');
+      expect(result.error.name).to.eql('ValidationError');
     });
 
   });
