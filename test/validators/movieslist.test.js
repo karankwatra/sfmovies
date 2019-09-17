@@ -1,7 +1,8 @@
 'use strict';
 
-const Joi               = require('joi');
-const MovieGetValidator = require('../../lib/validators/movieget');
+const Joi = require('joi');
+
+const MovieListValidator = require('../../lib/validators/movies/list');
 
 describe('movie query validator', () => {
 
@@ -9,7 +10,7 @@ describe('movie query validator', () => {
 
     it('is less than 255 characters', () => {
       const payload = { title: 'a'.repeat(260) };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('title');
       expect(result.error.details[0].type).to.eql('string.max');
@@ -24,7 +25,7 @@ describe('movie query validator', () => {
         title: 'foo',
         year: 1800
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -35,7 +36,7 @@ describe('movie query validator', () => {
         title: 'foo',
         year: 12345
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('year');
       expect(result.error.details[0].type).to.eql('number.max');
@@ -47,7 +48,7 @@ describe('movie query validator', () => {
         from_year: 1900,
         year: 1900
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].message).to.eql('"from_year" is not allowed');
     });
@@ -58,7 +59,7 @@ describe('movie query validator', () => {
         to_year: 1900,
         year: 1900
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].message).to.eql('"to_year" is not allowed');
     });
@@ -72,7 +73,7 @@ describe('movie query validator', () => {
         title: 'foo',
         from_year: 1800
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('from_year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -83,7 +84,7 @@ describe('movie query validator', () => {
         title: 'foo',
         from_year: 12345
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('from_year');
       expect(result.error.details[0].type).to.eql('number.max');
@@ -94,7 +95,7 @@ describe('movie query validator', () => {
         title: 'foo',
         from_year: 1900
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].context.missing[0]).to.eql('to_year');
     });
@@ -108,7 +109,7 @@ describe('movie query validator', () => {
         title: 'foo',
         to_year: 1800
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('to_year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -119,7 +120,7 @@ describe('movie query validator', () => {
         title: 'foo',
         to_year: 12345
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('to_year');
       expect(result.error.details[0].type).to.eql('number.max');
@@ -130,7 +131,7 @@ describe('movie query validator', () => {
         title: 'foo',
         to_year: 1900
       };
-      const result = Joi.validate(payload, MovieGetValidator);
+      const result = Joi.validate(payload, MovieListValidator);
 
       expect(result.error.details[0].context.missing[0]).to.eql('from_year');
     });

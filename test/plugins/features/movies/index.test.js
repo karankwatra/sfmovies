@@ -20,7 +20,7 @@ describe('movies integration', () => {
 
   });
 
-  describe('retrive', () => {
+  describe('retrieve', () => {
 
     it('retrieves a movie', async () => {
       const response = await Movies.inject({

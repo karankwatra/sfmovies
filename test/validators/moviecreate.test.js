@@ -1,7 +1,8 @@
 'use strict';
 
-const Joi            = require('joi');
-const MovieValidator = require('../../lib/validators/movie');
+const Joi = require('joi');
+
+const MovieValidator = require('../../lib/validators/movies/create');
 
 describe('movie validator', () => {
 

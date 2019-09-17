@@ -1,7 +1,8 @@
 'use strict';
 
+const Knex = require('../../../../lib/libraries/knex');
+
 const Controller = require('../../../../lib/plugins/features/movies/controller');
-const Knex       = require('../../../../lib/libraries/knex');
 
 describe('movie controller', () => {
 
