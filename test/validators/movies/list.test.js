@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 
-const MovieListValidator = require('../../../lib/validators/movies/list');
+const MoviesListValidator = require('../../../lib/validators/movies/list');
 
 describe('movie query validator', () => {
 
@@ -10,7 +10,7 @@ describe('movie query validator', () => {
 
     it('is less than 255 characters', () => {
       const payload = { title: 'a'.repeat(260) };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('title');
       expect(result.error.details[0].type).to.eql('string.max');
@@ -25,7 +25,7 @@ describe('movie query validator', () => {
         title: 'foo',
         year: 1800
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -36,7 +36,7 @@ describe('movie query validator', () => {
         title: 'foo',
         year: 12345
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('year');
       expect(result.error.details[0].type).to.eql('number.max');
@@ -48,7 +48,7 @@ describe('movie query validator', () => {
         from_year: 1900,
         year: 1900
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.name).to.eql('ValidationError');
     });
@@ -59,7 +59,7 @@ describe('movie query validator', () => {
         to_year: 1900,
         year: 1900
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.name).to.eql('ValidationError');
     });
@@ -73,7 +73,7 @@ describe('movie query validator', () => {
         title: 'foo',
         from_year: 1800
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('from_year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -84,29 +84,29 @@ describe('movie query validator', () => {
         title: 'foo',
         from_year: 12345
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('from_year');
       expect(result.error.details[0].type).to.eql('number.max');
     });
 
-    it('is accompanied by a to_year', () => {
+    it('is accompanied by a to_year fails when not provided', () => {
       const payload = {
         title: 'foo',
         from_year: 1900
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].context.missing[0]).to.eql('to_year');
     });
 
-    it('is accompanied by a to_year', () => {
+    it('is accompanied by a to_year succeeds with valid payload', () => {
       const payload = {
         title: 'foo',
         from_year: 1900,
         to_year: 2000
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error).to.eql(null);
     });
@@ -120,7 +120,7 @@ describe('movie query validator', () => {
         title: 'foo',
         to_year: 1800
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('to_year');
       expect(result.error.details[0].type).to.eql('number.min');
@@ -131,29 +131,29 @@ describe('movie query validator', () => {
         title: 'foo',
         to_year: 12345
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].path[0]).to.eql('to_year');
       expect(result.error.details[0].type).to.eql('number.max');
     });
 
-    it('is accompanied by a from_year', () => {
+    it('is accompanied by a from_year fails when not provided', () => {
       const payload = {
         title: 'foo',
         to_year: 1900
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error.details[0].context.missing[0]).to.eql('from_year');
     });
 
-    it('is accompanied by a from_year', () => {
+    it('is accompanied by a from_year succeeds with valid payload', () => {
       const payload = {
         title: 'foo',
         from_year: 1900,
         to_year: 2000
       };
-      const result = Joi.validate(payload, MovieListValidator);
+      const result = Joi.validate(payload, MoviesListValidator);
 
       expect(result.error).to.eql(null);
     });

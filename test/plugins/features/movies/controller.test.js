@@ -18,14 +18,12 @@ describe('movie controller', () => {
 
   describe('retrieve', () => {
 
+    const payload = { name: 'Zodiac', release_year: 2007 };
+    const payload2 = { name: 'Dawn of the Planet of the Apes', release_year: 2014 };
+
     beforeEach(async () => {
       await Knex.raw('DELETE FROM movies;');
-
-      this.payload = { title: 'Zodiac', release_year: 2007 };
-      this.payload2 = { title: 'Dawn of the Planet of the Apes', release_year: 2014 };
-
-      await Controller.create(this.payload);
-      await Controller.create(this.payload2);
+      await Knex('movies').insert([payload, payload2]);
     });
 
     it('retrieves the entire list of movies', async () => {
@@ -40,8 +38,8 @@ describe('movie controller', () => {
       const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
-      expect(movies.models[0].get('title')).to.eql(this.payload.title);
-      expect(movies.models[0].get('release_year')).to.eql(this.payload.release_year);
+      expect(movies.models[0].get('name')).to.eql(payload.name);
+      expect(movies.models[0].get('release_year')).to.eql(payload.release_year);
     });
 
     it('retrieves movies in a range of years', async () => {
@@ -49,8 +47,8 @@ describe('movie controller', () => {
       const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
-      expect(movies.models[0].get('title')).to.eql(this.payload.title);
-      expect(movies.models[0].get('release_year')).to.eql(this.payload.release_year);
+      expect(movies.models[0].get('name')).to.eql(payload.name);
+      expect(movies.models[0].get('release_year')).to.eql(payload.release_year);
     });
 
     it('retrieves a movie based on the title', async () => {
@@ -58,8 +56,8 @@ describe('movie controller', () => {
       const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
-      expect(movies.models[0].get('title')).to.eql(this.payload.title);
-      expect(movies.models[0].get('release_year')).to.eql(this.payload.release_year);
+      expect(movies.models[0].get('name')).to.eql(payload.name);
+      expect(movies.models[0].get('release_year')).to.eql(payload.release_year);
     });
 
     it('retrieves a movie based on the fuzzy title', async () => {
@@ -67,8 +65,8 @@ describe('movie controller', () => {
       const movies = await Controller.list(query);
 
       expect(movies.length).to.eql(1);
-      expect(movies.models[0].get('title')).to.eql(this.payload2.title);
-      expect(movies.models[0].get('release_year')).to.eql(this.payload2.release_year);
+      expect(movies.models[0].get('name')).to.eql(payload2.name);
+      expect(movies.models[0].get('release_year')).to.eql(payload2.release_year);
     });
 
   });
