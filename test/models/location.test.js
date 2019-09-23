@@ -6,10 +6,11 @@ describe('location model', () => {
 
   describe('serialize', () => {
 
-    it('includes all of the necessary fields', () => {
-      const location = Location.forge().serialize();
+    it('includes all of the necessary fields', async () => {
+      const location = await new Location();
+      const locationSerialized = location.serialize();
 
-      expect(location).to.have.all.keys([
+      expect(locationSerialized).to.have.all.keys([
         'id',
         'name',
         'object'
