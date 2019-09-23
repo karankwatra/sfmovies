@@ -3,6 +3,8 @@
 const Knex = require('../../../../lib/libraries/knex');
 
 const Controller = require('../../../../lib/plugins/features/movies/controller');
+const Movie      = require('../../../../lib/models/movie');
+const Location   = require('../../../../lib/models/location');
 
 describe('movie controller', () => {
 
@@ -22,7 +24,7 @@ describe('movie controller', () => {
     const payload2 = { name: 'Dawn of the Planet of the Apes', release_year: 2014 };
 
     beforeEach(async () => {
-      await Knex.raw('DELETE FROM movies;');
+      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
       await Knex('movies').insert([payload, payload2]);
     });
 
@@ -67,6 +69,31 @@ describe('movie controller', () => {
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('name')).to.eql(payload2.name);
       expect(movies.models[0].get('release_year')).to.eql(payload2.release_year);
+    });
+
+  });
+
+  describe('retrive movies with locations', () => {
+
+    const movie_payload = { name: 'Zodiac' };
+    const location_payload = { name: 'Bay Bridge' };
+
+    beforeEach(async () => {
+      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
+
+      const movie = await new Movie().save(movie_payload);
+      const location = await new Location().save(location_payload);
+
+      await new Movie({ id: movie.id }).locations().attach(location);
+    });
+
+    it('retrives a movie with the related locations', async () => {
+      const query = {};
+      const movies = await Controller.list(query);
+
+      expect(movies.length).to.eql(1);
+      expect(movies.models[0].get('name')).to.eql(movie_payload.name);
+      expect(movies.models[0].relations.locations.models[0].attributes.name).to.eql(location_payload.name);
     });
 
   });
