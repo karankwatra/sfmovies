@@ -16,11 +16,14 @@ const testLocMov   = LocationMovieFactory.build({ movie_id: testMovie1.id, locat
 
 describe('movie controller', () => {
 
-  describe('create', () => {
+  beforeEach(async () => {
+    await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
+    await Knex('movies').insert([testMovie1, testMovie2]);
+    await Knex('locations').insert(testLocation);
+    await Knex('locations_movies').insert(testLocMov);
+  });
 
-    beforeEach(async () => {
-      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
-    });
+  describe('create', () => {
 
     it('creates a movie', async () => {
       const payload = { title: 'WALL-E' };
@@ -31,11 +34,6 @@ describe('movie controller', () => {
   });
 
   describe('retrieve', () => {
-
-    beforeEach(async () => {
-      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
-      await Knex('movies').insert([testMovie1, testMovie2]);
-    });
 
     it('retrieves the entire list of movies', async () => {
       const query = {};
@@ -84,18 +82,11 @@ describe('movie controller', () => {
 
   describe('retrieve movies with locations', () => {
 
-    beforeEach(async () => {
-      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
-      await Knex('movies').insert(testMovie1);
-      await Knex('locations').insert(testLocation);
-      await Knex('locations_movies').insert(testLocMov);
-    });
-
     it('retrieves a movie with the related locations', async () => {
       const query = {};
       const movies = await Controller.list(query);
 
-      expect(movies.length).to.eql(1);
+      expect(movies.length).to.eql(2);
       expect(movies.models[0].get('name')).to.eql(testMovie1.name);
       expect(movies.models[0].relations.locations.models[0].attributes.name).to.eql(testLocation.name);
     });

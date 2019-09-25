@@ -4,13 +4,18 @@ const Knex = require('../../../../lib/libraries/knex');
 
 const Movies = require('../../../../lib/server');
 
+const MovieFactory = require('../../../factories/movie');
+
+const testMovie = MovieFactory.build({ name: 'Zodiac' });
+
 describe('movies integration', () => {
 
-  describe('create', () => {
+  beforeEach(async () => {
+    await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
+    await Knex('movies').insert(testMovie);
+  });
 
-    beforeEach(async () => {
-      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
-    });
+  describe('create', () => {
 
     it('creates a movie', async () => {
       const response = await Movies.inject({
@@ -30,7 +35,7 @@ describe('movies integration', () => {
 
     it('retrieves a movie', async () => {
       const response = await Movies.inject({
-        url: '/movies?title=Volver',
+        url: '/movies?title=Zodiac',
         method: 'GET'
       });
 
