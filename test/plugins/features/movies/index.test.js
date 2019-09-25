@@ -28,10 +28,6 @@ describe('movies integration', () => {
 
   describe('retrieve', () => {
 
-    beforeEach(async () => {
-      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
-    });
-
     it('retrieves a movie', async () => {
       const response = await Movies.inject({
         url: '/movies?title=Volver',
