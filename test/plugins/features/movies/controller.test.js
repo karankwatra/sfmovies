@@ -18,6 +18,10 @@ describe('movie controller', () => {
 
   describe('create', () => {
 
+    beforeEach(async () => {
+      await Knex.raw('TRUNCATE movies CASCADE; TRUNCATE locations CASCADE; TRUNCATE locations_movies CASCADE;');
+    });
+
     it('creates a movie', async () => {
       const payload = { title: 'WALL-E' };
       const movie = await Controller.create(payload);
