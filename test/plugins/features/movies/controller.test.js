@@ -93,4 +93,24 @@ describe('movie controller', () => {
 
   });
 
+  describe('add location to movie', () => {
+
+    it('adds a location to a movie', async () => {
+      const movie = await Controller.addLocationToMovie(testMovie2.id, testLocation.id);
+
+      expect(movie.relations.locations.length).to.eql(1);
+      expect(movie.relations.locations.models[0].get('name')).to.eql(testLocation.name);
+    });
+
+  });
+
+  it('attempts to add a location to a movie twice', async () => {
+    await Controller.addLocationToMovie(testMovie2.id, testLocation.id);
+
+    const movie = await Controller.addLocationToMovie(testMovie2.id, testLocation.id);
+
+    expect(movie.relations.locations.length).to.eql(1);
+    expect(movie.relations.locations.models[0].get('name')).to.eql(testLocation.name);
+  });
+
 });
