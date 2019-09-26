@@ -7,6 +7,13 @@
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.1.tgz#61395b5ed94c4cb19c2dc4c85969cff3d40d583f"
   integrity sha512-DYuHzu978pP1XW1GD3HGvLnAFjbQTIgc2+V153FGkbS2pgo9haigCdwBnUDrbhaOkgiJlbZvoEqDrcxSLHpiWA==
 
+"@hapi/boom@^7.4.10":
+  version "7.4.10"
+  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-7.4.10.tgz#fae360a8f6a52fbb5bfbe179982d74351ee1df1d"
+  integrity sha512-QCeJhQTtY8U3N5H8IO/PMp6sMSCW0189ylquqfHX9PJkxSHvqKAgNzKvg5APjOKK1dcK8obTeg/UICkb3b3fXw==
+  dependencies:
+    "@hapi/hoek" "8.x.x"
+
 "@hapi/formula@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@hapi/formula/-/formula-1.2.0.tgz#994649c7fea1a90b91a0a1e6d983523f680e10cd"
