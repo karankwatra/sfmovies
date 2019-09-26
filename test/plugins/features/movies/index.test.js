@@ -54,7 +54,7 @@ describe('movies integration', () => {
       const response = await Movies.inject({
         url: `/movies/${testMovie.id}/locations`,
         method: 'POST',
-        payload: { location_name: testLocation.name }
+        payload: { locationName: testLocation.name }
       });
 
       expect(response.statusCode).to.eql(200);
@@ -67,7 +67,7 @@ describe('movies integration', () => {
       const response = await Movies.inject({
         url: '/movies/9999/locations',
         method: 'POST',
-        payload: { location_name: testLocation.name }
+        payload: { locationName: testLocation.name }
       });
 
       expect(response.statusCode).to.eql(404);

@@ -100,26 +100,29 @@ describe('movie controller', () => {
   describe('add location to movie', () => {
 
     it('adds a location to a movie', async () => {
-      const movie = await Controller.addLocationToMovie(testMovie2.id, testLocation.name);
+      const payload = { locationName: testLocation.name };
+      const movie = await Controller.addLocationToMovie(testMovie2.id, payload);
 
       expect(movie.relations.locations.length).to.eql(1);
-      expect(movie.relations.locations.models[0].get('name')).to.eql(testLocation.name);
+      expect(movie.relations.locations.models[0].get('name')).to.eql(payload.locationName);
     });
 
     it('attempts to add a location to a movie twice', async () => {
-      await Controller.addLocationToMovie(testMovie2.id, testLocation.name);
+      const payload = { locationName: testLocation.name };
+      await Controller.addLocationToMovie(testMovie2.id, payload);
 
-      const movie = await Controller.addLocationToMovie(testMovie2.id, testLocation.name);
+      const movie = await Controller.addLocationToMovie(testMovie2.id, payload);
 
       expect(movie.relations.locations.length).to.eql(1);
-      expect(movie.relations.locations.models[0].get('name')).to.eql(testLocation.name);
+      expect(movie.relations.locations.models[0].get('name')).to.eql(payload.locationName);
     });
 
     it('adds a new location to a movie', async () => {
-      const movie = await Controller.addLocationToMovie(testMovie3.id, 'San Francisco');
+      const payload = { locationName: 'San Francisco' };
+      const movie = await Controller.addLocationToMovie(testMovie3.id, payload);
 
       expect(movie.relations.locations.length).to.eql(1);
-      expect(movie.relations.locations.models[0].get('name')).to.eql('San Francisco');
+      expect(movie.relations.locations.models[0].get('name')).to.eql(payload.locationName);
     });
 
   });
