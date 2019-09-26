@@ -33,6 +33,7 @@
     "test:raw": "NODE_ENV=test mocha test --require test/setup.js --recursive --timeout 30000"
   },
   "dependencies": {
+    "@hapi/boom": "^7.4.10",
     "@hapi/joi": "^16.1.1",
     "bookshelf": "^0.15.1",
     "hapi": "16.6.1",
