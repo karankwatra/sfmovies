@@ -63,7 +63,7 @@ describe('movies integration', () => {
       expect(response.result.locations.models[0].get('name')).to.eql(testLocation.name);
     });
 
-    it('attempts to add a location to a non-existent movie', async () => {
+    it('404s when adding a location to a non-existent movie', async () => {
       const response = await Movies.inject({
         url: '/movies/9999/locations',
         method: 'POST',

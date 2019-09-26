@@ -107,8 +107,9 @@ describe('movie controller', () => {
       expect(movie.relations.locations.models[0].get('name')).to.eql(payload.locationName);
     });
 
-    it('attempts to add a location to a movie twice', async () => {
+    it('does not add a location to a movie twice', async () => {
       const payload = { locationName: testLocation.name };
+
       await Controller.addLocationToMovie(testMovie2.id, payload);
 
       const movie = await Controller.addLocationToMovie(testMovie2.id, payload);
@@ -125,6 +126,15 @@ describe('movie controller', () => {
       expect(movie.relations.locations.models[0].get('name')).to.eql(payload.locationName);
     });
 
+  });
+
+  it('errs when adding a location to a non-existent movie', async () => {
+    const payload = { locationName: testLocation.name };
+
+    await Controller.addLocationToMovie(9999, payload)
+    .catch((err) => {
+      expect(err.output.statusCode).to.eql(404);
+    });
   });
 
 });
