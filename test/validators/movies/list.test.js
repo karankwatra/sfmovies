@@ -160,4 +160,16 @@ describe('movie query validator', () => {
 
   });
 
+  describe('location', () => {
+
+    it('is less than 255 characters', () => {
+      const payload = { location: 'a'.repeat(260) };
+      const result = Joi.validate(payload, MoviesListValidator);
+
+      expect(result.error.details[0].path[0]).to.eql('title');
+      expect(result.error.details[0].type).to.eql('string.max');
+    });
+
+  });
+
 });
