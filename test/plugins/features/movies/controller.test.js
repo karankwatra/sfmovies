@@ -35,6 +35,10 @@ describe('movie controller', () => {
 
   describe('retrieve', () => {
 
+    beforeEach(async () => {
+      await Knex('locations_movies').insert(testLocMov);
+    });
+
     it('retrieves the entire list of movies', async () => {
       const query = {};
       const movies = await Controller.list(query);
@@ -76,6 +80,16 @@ describe('movie controller', () => {
       expect(movies.length).to.eql(1);
       expect(movies.models[0].get('name')).to.eql(testMovie2.name);
       expect(movies.models[0].get('release_year')).to.eql(testMovie2.release_year);
+    });
+
+    it('retrieves a movie based on its location', async () => {
+      const query = { location: testLocation.name };
+      const movies = await Controller.list(query);
+
+      expect(movies.length).to.eql(1);
+      expect(movies.models[0].get('name')).to.eql(testMovie1.name);
+      expect(movies.models[0].get('release_year')).to.eql(testMovie1.release_year);
+      expect(movies.models[0].relations.locations.models[0].get('name')).to.eql(testLocation.name);
     });
 
   });
