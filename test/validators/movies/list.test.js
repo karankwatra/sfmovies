@@ -166,7 +166,7 @@ describe('movie query validator', () => {
       const payload = { location: 'a'.repeat(260) };
       const result = Joi.validate(payload, MoviesListValidator);
 
-      expect(result.error.details[0].path[0]).to.eql('title');
+      expect(result.error.details[0].path[0]).to.eql('location');
       expect(result.error.details[0].type).to.eql('string.max');
     });
 
