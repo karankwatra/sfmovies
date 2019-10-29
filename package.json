@@ -40,7 +40,7 @@
     "hapi-bookshelf-serializer": "2.1.0",
     "hapi-format-error": "^2.1.0",
     "joi": "14.3.1",
-    "knex": "^0.19.3",
+    "knex": "^0.19.5",
     "pg": "^7.12.1",
     "rosie": "^2.0.1"
   }
